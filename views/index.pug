@@ -2,4 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  form(action='/login' method='post')
+      input(type='text' name='username' placeholder='Pseudo')
+      input(type='password' name='password' placeholder='Mot de passe')
+      input(type='submit')
+  a(href='/register') Créer un compte
