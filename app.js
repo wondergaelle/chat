@@ -8,6 +8,7 @@ var sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var moment = require('moment');
 var LocalStrategy = require('passport-local').Strategy;
 var MongoStore = require('connect-mongo')(session);
 var User = require('./models/User.js');
@@ -17,6 +18,15 @@ var usersRouter = require('./routes/users');
 var chatsRouter = require('./routes/chats');
 
 var app = express();
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+io.on('connection', socket => {
+  console.log('user connected!');
+});
+
+server.listen(5000);
 
 // Se connecter à la base de données
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {
@@ -59,6 +69,8 @@ passport.deserializeUser(User.deserializeUser());
 // Middleware
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  moment.locale('fr');
+  res.locals.moment = moment;
   next();
 });
 
