@@ -29,7 +29,7 @@ router.post('/register', (req, res) => {
 });
 
 
-router.post('/login', passport.authenticate ('local'), (req, res)=>{
+router.post('/login', passport.authenticate('local'), (req, res) => {
   res.redirect('/chats');
 });
 

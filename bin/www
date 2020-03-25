@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('chat:server');
 var http = require('http');
-var mongoose = require('mongoose');
 
 /**
  * Get port from environment and store in Express.
@@ -25,17 +24,6 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-// Se connecter à la base de données
-mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true,
-    useCreateIndex: true
-});
-
-// Enregistrer la connexion dans la variable db
-app.locals.db = mongoose.connection;
 
 // Une fois que la connexion est ouverte, on démarre le serveur
 app.locals.db.once('open', () => {
