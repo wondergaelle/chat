@@ -25,6 +25,21 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+// Se connecter à la base de données
+mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true
+});
+
+// Enregistrer la connexion dans la variable db
+app.locals.db = mongoose.connection;
+
+// Une fois que la connexion est ouverte, on démarre le serveur
+app.locals.db.once('open', () => {
+  server.listen(port);
+});
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
