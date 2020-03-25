@@ -3,11 +3,15 @@ extends ../layout
 block content
     h1= title
 
-    p= 'Vous êtes connecté en tant que ' + user.username
+    p
+        | Vous êtes connecté en tant que&nbsp
+        span#username= user.username
 
     form#message(action='/chats/message' method='post')
         textarea(name='content' placeholder='Votre message')
         input(type='submit')
+
+    p#writing Quelqu'un est en train d'écrire...
 
     section#list-messages
         each message in messages

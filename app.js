@@ -24,6 +24,11 @@ var io = require('socket.io')(server);
 
 io.on('connection', socket => {
   console.log('user connected!');
+
+  socket.on('new-message', message => socket.broadcast.emit('show-message', message));
+  socket.on('writing', username => socket.broadcast.emit('writing', username));
+  socket.on('not-writing', username => socket.broadcast.emit('not-writing', username));
+
 });
 
 server.listen(5000);
