@@ -5,11 +5,11 @@ block content
 
     p= 'Vous êtes connecté en tant que ' + user.username
 
-    form(action='/chats/message' method='post')
+    form#message(action='/chats/message' method='post')
         textarea(name='content' placeholder='Votre message')
         input(type='submit')
 
-    section
+    section#list-messages
         each message in messages
             article
                 em= 'Posté ' + moment(message.createdAt).fromNow() + ' par ' + message.user.username

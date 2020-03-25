@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
 router.post('/message', (req, res) => {
     const message = new Message({ content: req.body.content, user: req.user });
     message.save((err, newMessage) => {
-        res.redirect('/chats');
+        if (err) return res.json(err);
+        res.json(newMessage);
     });
 });
 
